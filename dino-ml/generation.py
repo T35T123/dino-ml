@@ -2,7 +2,7 @@ from scanner import Scanner
 from network import Network
 from time import sleep
 import numpy as np
-import pykeyboard
+import keyboard as k
 import random
 import copy
 
@@ -12,22 +12,20 @@ class Generation:
         self.__best_genomes = []
 
     def execute(self):
-        k = pykeyboard.PyKeyboard()
         scanner = Scanner()
         scanner.find_game()
         for genome in self.__genomes:
             scanner.reset()
-            k.press_keys(['Command', 'r'])
-            k.release_key('Command')
+            k.send('ctrl+r')
             sleep(1)
-            k.press_key(k.space)
+            k.send('space')
             while True:
                 try:
                     obs = scanner.find_next_obstacle()
                     inputs = [obs['distance'] / 1000, obs['length'], obs['speed'] / 10]
                     outputs = genome.forward(np.array(inputs, dtype=float))
                     if outputs[0] > 0.55:
-                        k.press_key(k.space)
+                        k.send('space')
                 except:
                     break
             genome.fitness = scanner.get_fitness()

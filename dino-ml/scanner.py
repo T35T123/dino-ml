@@ -1,11 +1,11 @@
-from PIL import Image
+from PIL import Image, ImageGrab
 from datetime import datetime
 import os
 
 dino_color = (83, 83, 83, 255)
 
 def screenshot(x, y, w, h):
-    os.system("screencapture -R{},{},{},{} tmp.png".format(x, y, w, h))
+    #os.system("screencapture -R{},{},{},{} tmp.png".format(x, y, w, h))
     img = Image.open("tmp.png")
     return img
 
